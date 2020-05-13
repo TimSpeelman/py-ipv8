@@ -7,6 +7,7 @@ from .noblock_dht_endpoint import NoBlockDHTEndpoint
 from .overlays_endpoint import OverlaysEndpoint
 from .trustchain_endpoint import TrustchainEndpoint
 from .tunnel_endpoint import TunnelEndpoint
+from .me_endpoint import MeEndpoint
 
 
 class RootEndpoint(BaseEndpoint):
@@ -18,6 +19,7 @@ class RootEndpoint(BaseEndpoint):
     def setup_routes(self):
         endpoints = {'/attestation': AttestationEndpoint,
                      '/dht': DHTEndpoint,
+                     '/me': MeEndpoint,
                      '/isolation': IsolationEndpoint,
                      '/network': NetworkEndpoint,
                      '/noblockdht': NoBlockDHTEndpoint,
