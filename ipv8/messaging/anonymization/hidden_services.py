@@ -9,6 +9,7 @@ import random
 import struct
 import time
 from asyncio import gather, iscoroutine
+from binascii import unhexlify
 
 from .caches import *
 from .community import TunnelCommunity, message_to_payload, tc_lazy_wrapper_unsigned
@@ -27,6 +28,10 @@ from ...util import fail
 
 
 class HiddenTunnelCommunity(TunnelCommunity):
+
+    master_peer = ("4c69624e61434c504b3ad051d49fbceef0172b68f709818ab00ec1a98461ac4d76dbfe5ec69f3d5eeb34ead4fc5"
+                   "f280bddd4e3381a2b70e70f78a4f783819dbe2146fce70efc0097d600")
+    master_peer = Peer(unhexlify(master_peer))
 
     def __init__(self, *args, **kwargs):
         self.ipv8 = kwargs.pop('ipv8', None)
