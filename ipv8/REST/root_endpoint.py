@@ -11,10 +11,14 @@ from .me_endpoint import MeEndpoint
 
 
 class RootEndpoint(BaseEndpoint):
+    extra_endpoints = {}
     """
     The root endpoint of the HTTP API is the root resource in the request tree.
     It will dispatch requests regarding torrents, channels, settings etc to the right child endpoint.
     """
+    def __init__(self, middlewares=(), endpoints={}):
+        self.extra_endpoints = endpoints # must precede super, because parent init calls setup_routes
+        super(RootEndpoint, self).__init__(middlewares)
 
     def setup_routes(self):
         endpoints = {'/attestation': AttestationEndpoint,
@@ -25,6 +29,7 @@ class RootEndpoint(BaseEndpoint):
                      '/noblockdht': NoBlockDHTEndpoint,
                      '/overlays': OverlaysEndpoint,
                      '/trustchain': TrustchainEndpoint,
-                     '/tunnel': TunnelEndpoint}
+                     '/tunnel': TunnelEndpoint,
+                     **self.extra_endpoints}
         for path, ep_cls in endpoints.items():
             self.add_endpoint(path, ep_cls())

@@ -11,7 +11,12 @@ from .root_endpoint import RootEndpoint
 async def cors_middleware(request, handler):
     preflight_cors = request.method == "OPTIONS" and 'Access-Control-Request-Method' in request.headers
     if not preflight_cors:
-        return await handler(request)
+        response = await handler(request)
+        response.headers['Access-Control-Allow-Methods'] = "GET, PUT, POST, PATCH, DELETE, OPTIONS"
+        response.headers['Access-Control-Allow-Headers'] = '*'
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        # response.headers['Access-Control-Max-Age'] = str(86400)
+        return response
 
     response = web.StreamResponse()
     # For now, just allow all methods
@@ -32,11 +37,11 @@ class RESTManager:
         self.session = session
         self.site = None
 
-    async def start(self, port=8085, host='127.0.0.1'):
+    async def start(self, port=8085, endpoints={}):
         """
         Starts the HTTP API with the listen port as specified in the session configuration.
         """
-        root_endpoint = RootEndpoint(middlewares=[cors_middleware])
+        root_endpoint = RootEndpoint(middlewares=[cors_middleware], endpoints=endpoints)
         root_endpoint.initialize(self.session)
         setup_aiohttp_apispec(
             app=root_endpoint.app,
@@ -53,7 +58,7 @@ class RESTManager:
         runner = web.AppRunner(root_endpoint.app, access_log=None)
         await runner.setup()
         # If localhost is used as hostname, it will randomly either use 127.0.0.1 or ::1
-        self.site = web.TCPSite(runner, host, port)
+        self.site = web.TCPSite(runner, '127.0.0.1', port)
         await self.site.start()
 
     async def stop(self):
