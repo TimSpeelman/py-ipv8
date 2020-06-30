@@ -26,16 +26,16 @@ default = {
                         'timeout': 3.0
                     }
                 },
-                # {
-                #     'strategy': "RandomChurn",
-                #     'peers': -1,
-                #     'init': {
-                #         'sample_size': 8,
-                #         'ping_interval': 10.0,
-                #         'inactive_time': 27.5,
-                #         'drop_time': 57.5
-                #     }
-                # },
+                {
+                    'strategy': "RandomChurn",
+                    'peers': -1,
+                    'init': {
+                        'sample_size': 8,
+                        'ping_interval': 10.0,
+                        'inactive_time': 27.5,
+                        'drop_time': 57.5
+                    }
+                },
                 {
                     'strategy': "PeriodicSimilarity",
                     'peers': -1,
