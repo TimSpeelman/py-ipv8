@@ -56,7 +56,7 @@ class UDPEndpoint(Endpoint, asyncio.DatagramProtocol):
         loop = asyncio.get_event_loop()
 
         for _ in range(10000):
-            try:
+            # try:
                 # It is recommended that this endpoint is opened at port = 0,
                 # such that the OS handles the port assignment
                 self._transport = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
