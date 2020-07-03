@@ -21,15 +21,15 @@ class RootEndpoint(BaseEndpoint):
         super(RootEndpoint, self).__init__(middlewares)
 
     def setup_routes(self):
-        endpoints = {'/attestation': AttestationEndpoint,
-                     '/dht': DHTEndpoint,
-                     '/me': MeEndpoint,
-                     '/isolation': IsolationEndpoint,
-                     '/network': NetworkEndpoint,
-                     '/noblockdht': NoBlockDHTEndpoint,
-                     '/overlays': OverlaysEndpoint,
-                     '/trustchain': TrustchainEndpoint,
-                     '/tunnel': TunnelEndpoint,
+        endpoints = {'/attestation': AttestationEndpoint(),
+                     '/dht': DHTEndpoint(),
+                     '/me': MeEndpoint(),
+                     '/isolation': IsolationEndpoint(),
+                     '/network': NetworkEndpoint(),
+                     '/noblockdht': NoBlockDHTEndpoint(),
+                     '/overlays': OverlaysEndpoint(),
+                     '/trustchain': TrustchainEndpoint(),
+                     '/tunnel': TunnelEndpoint(),
                      **self.extra_endpoints}
         for path, ep_cls in endpoints.items():
-            self.add_endpoint(path, ep_cls())
+            self.add_endpoint(path, ep_cls)
