@@ -121,7 +121,7 @@ class DHTEndpoint(BaseEndpoint):
                 "error": {
                     "handled": True,
                     "code": e.__class__.__name__,
-                    "message": e.message
+                    "message": str(e)
                 }
             }, status=HTTP_INTERNAL_SERVER_ERROR)
 
@@ -188,7 +188,7 @@ class DHTEndpoint(BaseEndpoint):
                 "error": {
                     "handled": True,
                     "code": e.__class__.__name__,
-                    "message": e.message
+                    "message": str(e)
                 }
             }, status=HTTP_INTERNAL_SERVER_ERROR)
 
@@ -233,7 +233,7 @@ class DHTEndpoint(BaseEndpoint):
                 "error": {
                     "handled": True,
                     "code": e.__class__.__name__,
-                    "message": e.message
+                    "message": str(e)
                 }
             }, status=HTTP_INTERNAL_SERVER_ERROR)
 
